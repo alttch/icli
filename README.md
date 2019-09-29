@@ -1,6 +1,6 @@
 # icli - interactive command line interfaces
 
-## What's icli
+## What is icli
 
 **icli** is a Python library, built on top of **argparse**, which allows you to
 quickly build rich interactive command line interfaces with sections, command
