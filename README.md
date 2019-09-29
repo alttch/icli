@@ -7,7 +7,7 @@ quickly build rich interactive command line interfaces with sections, command
 history, command batch processing, command repeating and interactive
 auto-complete.
 
-<img src="https://github.com/alttch/icli/blob/master/demo.gif?raw=true" width="500" />
+<img src="https://github.com/alttch/icli/blob/master/demo.gif?raw=true" width="800" />
 
 **icli** uses **readline** library for command inputs.
 
