@@ -275,6 +275,7 @@ class ArgumentParser(argparse.ArgumentParser):
                         try:
                             a = self.parse_args(args)
                         except:
+                            self.handle_interactive_exception()
                             continue
                         try:
                             self.run(**a.__dict__)
