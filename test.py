@@ -2,75 +2,110 @@
 
 import icli
 
-ap = icli.ArgumentParser(prog='')
+try:
+    import neotermcolor
+except:
+    neotermcolor = None
+
+user_accounts = ['john', 'kate', 'max']
+api_keys = ['key1', 'key2', 'key3']
+documents = ['file1', 'file2', 'file3']
+
+
+class ArgumentParser(icli.ArgumentParser):
+
+    def run(self, _object, _type=None, _command=None, **kwargs):
+        if _object == 'user':
+            if _type == 'account':
+                if _command == 'list':
+                    for i in user_accounts:
+                        print(i)
+                elif _command == 'add':
+                    user_accounts.append(kwargs['account'])
+                    print('OK')
+                elif _command == 'del':
+                    user_accounts.remove(kwargs['account'])
+                    print('OK')
+            elif _type == 'apikey':
+                for i in range(1, 4):
+                    print('api key {}'.format(i))
+        elif _object == 'document':
+            for i in documents:
+                print(i)
+
+    def syscmd(self, cmd):
+        import os
+        os.system(cmd)
+
+    def handle_interactive_exception(self):
+        if neotermcolor:
+            neotermcolor.cprint('error', 'red')
+        else:
+            print('error')
+        import traceback
+        traceback.print_exc()
+
+    def get_interactive_prompt(self):
+        if self.current_section:
+            s = '/'.join(self.current_section)
+            if neotermcolor:
+                s = neotermcolor.colored(s,
+                                         color='yellow',
+                                         attrs='bold',
+                                         readline_safe=True)
+            ps = '[{}]{}'.format(s, self.ps)
+        else:
+            ps = self.ps
+        return ps
+
+
+ap = ArgumentParser(prog='')
 
 sp = ap.add_subparsers(dest='_object', metavar='object', help='Object')
 
-ap_account = sp.add_parser('account', help='Accounts')
-sp_account_type = ap_account.add_subparsers(dest='_type',
-                                            metavar='type',
-                                            help='Account type')
+ap_user = sp.add_parser('user', help='Users')
+sp_user_type = ap_user.add_subparsers(dest='_type',
+                                      metavar='type',
+                                      help='User object type')
 
-ap_account_bank = sp_account_type.add_parser('bank', help='Bank accounts')
-sp_account_bank = ap_account_bank.add_subparsers(dest='_command',
+ap_user_account = sp_user_type.add_parser('account', help='User accounts')
+sp_user_account = ap_user_account.add_subparsers(dest='_command',
                                                  metavar='command',
                                                  help='Command')
 
-sp_account_bank_list = sp_account_bank.add_parser('list', help='List accounts')
+sp_user_account_list = sp_user_account.add_parser('list',
+                                                  help='List user accounts')
 
-sp_account_bank_add = sp_account_bank.add_parser('add', help='Add account')
-sp_account_bank_add.add_argument('account',
+sp_user_account_add = sp_user_account.add_parser('add', help='Add user account')
+sp_user_account_add.add_argument('account',
                                  metavar='ACCOUNT',
                                  help='Account name')
 
-sp_account_bank_delete = sp_account_bank.add_parser('del',
-                                                    help='Delete account')
+sp_user_account_delete = sp_user_account.add_parser('del',
+                                                    help='Delete user account')
 
-sp_account_bank_delete.add_argument('account',
-                                    metavar='ACCOUNT',
-                                    help='Account ID or name')
+sp_user_account_delete.add_argument('account',
+                                    metavar='NAME',
+                                    help='Account name')
 
-ap_account_cash = sp_account_type.add_parser('cash', help='Cash accounts')
-sp_account_cash = ap_account_cash.add_subparsers(dest='_command',
-                                                 metavar='command',
-                                                 help='Command')
+ap_user_apikey = sp_user_type.add_parser('apikey', help='API keys')
+sp_user_apikey = ap_user_apikey.add_subparsers(dest='_command',
+                                               metavar='command',
+                                               help='Command')
 
-sp_account_cash_list = sp_account_cash.add_parser('list', help='List accounts')
+sp_user_apikey_list = sp_user_apikey.add_parser('list', help='List keys')
 
-sp_account_cash_add = sp_account_cash.add_parser('add', help='Add account')
-sp_account_cash_add.add_argument('account',
-                                 metavar='ACCOUNT',
-                                 help='Account name')
-
-sp_account_cash_delete = sp_account_cash.add_parser('del',
-                                                    help='Delete account')
-
-sp_account_cash_delete.add_argument('account',
-                                    metavar='ACCOUNT',
-                                    help='Account ID or name')
-
-ap_invoice = sp.add_parser('invoice', help='Invoice')
+ap_invoice = sp.add_parser('document', help='Documents')
 sp_invoice = ap_invoice.add_subparsers(dest='_command',
                                        metavar='command',
                                        help='Command')
 
-sp_invoice_list = sp_invoice.add_parser('list', help='List invoices')
+sp_invoice_list = sp_invoice.add_parser('list', help='List documents')
 
-ap.sections = {'account': ['bank', 'cash'], 'invoice': []}
-
-
-def syscmd(cmd):
-    import os
-    os.system(cmd)
-
-
-def error():
-    print('error')
-
+ap.sections = {'user': ['account', 'apikey'], 'document': []}
 
 for c in ('top', 'w', 'uptime'):
-    ap.interactive_global_commands[c] = syscmd
+    ap.interactive_global_commands[c] = ap.syscmd
 
-ap.handle_interactive_exception = error
 ap.interactive_history_file = '~/.test-icli'
 ap.interactive()
