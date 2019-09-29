@@ -107,7 +107,7 @@ otherwise process them:
 import sys
 
 # prog param sets program name in help to empty for interactive mode
-ap = ArgumentParser(prog='' if len(sys.argv) < 2 else None)
+ap = icli.ArgumentParser(prog='' if len(sys.argv) < 2 else None)
 
 # ...
 
