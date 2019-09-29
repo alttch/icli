@@ -58,6 +58,12 @@ class ArgumentParser(argparse.ArgumentParser):
         '''
         raise
 
+    def handle_interactive_parser_exception(self):
+        '''
+        Called if argparse exception is occured
+        '''
+        return
+
     def clear_screen(self):
         import platform
         import os
@@ -275,7 +281,7 @@ class ArgumentParser(argparse.ArgumentParser):
                         try:
                             a = self.parse_args(args)
                         except:
-                            self.handle_interactive_exception()
+                            self.handle_interactive_parser_exception()
                             continue
                         try:
                             self.run(**a.__dict__)
