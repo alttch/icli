@@ -93,7 +93,10 @@ class ArgumentParser(argparse.ArgumentParser):
                 result = result[len(cs):]
         return gpfx + pfx + result
 
-    def interactive(self):
+    def batch(self, stream):
+        return self.interactive(stream=stream)
+
+    def interactive(self, stream=None):
 
         import readline
         import argcomplete
@@ -109,21 +112,36 @@ class ArgumentParser(argparse.ArgumentParser):
                 except:
                     pass
 
-        self._i_completer = argcomplete.CompletionFinder(
-            self, default_completer=argcomplete.completers.SuppressCompleter())
-        readline.set_completer_delims('')
-        readline.set_completer(self.interactive_completer)
-        readline.parse_and_bind('tab: complete')
-        readline.set_history_length(self.interactive_history_length)
-        if self.interactive_history_file:
-            try:
-                readline.read_history_file(
-                    os.path.expanduser(self.interactive_history_file))
-            except:
-                pass
+        if stream:
+            input_strings = stream.readlines()
+            if not input_strings:
+                return
+            sidx = 0
+        else:
+            self._i_completer = argcomplete.CompletionFinder(
+                self,
+                default_completer=argcomplete.completers.SuppressCompleter())
+            readline.set_completer_delims('')
+            readline.set_completer(self.interactive_completer)
+            readline.parse_and_bind('tab: complete')
+            readline.set_history_length(self.interactive_history_length)
+            if self.interactive_history_file:
+                try:
+                    readline.read_history_file(
+                        os.path.expanduser(self.interactive_history_file))
+                except:
+                    pass
         while True:
             try:
-                input_str = input(self.get_interactive_prompt())
+                if stream:
+                    try:
+                        input_str = input_strings[sidx]
+                    except IndexError:
+                        return
+                    if sidx: print()
+                    sidx += 1
+                else:
+                    input_str = input(self.get_interactive_prompt())
                 input_arr = shlex.split(input_str)
                 if not input_arr: continue
                 if input_arr[-1].startswith('|'):
