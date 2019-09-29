@@ -22,6 +22,12 @@ auto-complete.
 
 * Auto-completion (via **argcomplete**)
 
+## Hot to install
+
+```
+pip3 install icli
+```
+
 ## How to use
 
 * use **icli.ArgumentParser** just like **argparse.ArgumentParser** (create
