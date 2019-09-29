@@ -107,6 +107,7 @@ class ArgumentParser(argparse.ArgumentParser):
                     pass
             else:
                 sect_help = False
+                break
         if sect_help: args.append('-h')
         self.run(**self.parse_args(args).__dict__)
 
