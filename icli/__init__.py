@@ -198,7 +198,7 @@ class ArgumentParser(argparse.ArgumentParser):
                                 self.print_global_help()
                                 parsed[0] = '-h'
                             elif parsed[0] in self.interactive_quit:
-                                save_history()
+                                if not stream: save_history()
                                 print()
                                 return
                         # try to jump to section
