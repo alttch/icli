@@ -127,10 +127,15 @@ for c in ('top', 'w', 'uptime'):
 
 ap.interactive_history_file = '~/.test-icli'
 
-import io
+#import io
 
 # f = io.StringIO()
 # f.write('user account list ; user apikey list\ndocument list')
 # f.seek(0)
 # ap.batch(f)
-ap.interactive()
+import sys
+
+if len(sys.argv) > 1:
+    ap.launch()
+else:
+    ap.interactive()

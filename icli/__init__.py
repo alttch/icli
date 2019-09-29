@@ -93,6 +93,23 @@ class ArgumentParser(argparse.ArgumentParser):
                 result = result[len(cs):]
         return gpfx + pfx + result
 
+    def launch(self, args=None):
+        sect = self.sections
+        sect_help = True
+        if not args:
+            import sys
+            args = sys.argv[1:]
+        for a in args:
+            if a in sect:
+                try:
+                    sect = sect[a]
+                except TypeError:
+                    pass
+            else:
+                sect_help = False
+        if sect_help: args.append('-h')
+        self.run(**self.parse_args(args).__dict__)
+
     def batch(self, stream):
         return self.interactive(stream=stream)
 
