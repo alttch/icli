@@ -180,6 +180,7 @@ class ArgumentParser(argparse.ArgumentParser):
                                 parsed[0] = '-h'
                             elif parsed[0] in self.interactive_quit:
                                 save_history()
+                                print()
                                 return
                         # try to jump to section
                         jump_to = []
@@ -254,4 +255,5 @@ class ArgumentParser(argparse.ArgumentParser):
                     continue
                 else:
                     save_history()
+                    print()
                     return
