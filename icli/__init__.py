@@ -1,6 +1,6 @@
 __author__ = 'Altertech'
 __license__ = 'MIT'
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 import argparse
 
