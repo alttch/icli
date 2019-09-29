@@ -1,4 +1,4 @@
-# icli - Interactive command line interfaces
+# icli - interactive command line interfaces
 
 ## What's icli
 
