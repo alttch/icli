@@ -24,7 +24,7 @@ auto-complete.
 
 * Auto-completion (via **argcomplete**)
 
-## Hot to install
+## How to install
 
 ```
 pip3 install icli
