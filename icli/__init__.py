@@ -258,7 +258,7 @@ class ArgumentParser(argparse.ArgumentParser):
                 pass
             except EOFError:
                 if self.current_section:
-                    self.current_section = []
+                    self.current_section.pop()
                     print()
                     continue
                 else:
