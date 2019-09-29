@@ -12,6 +12,12 @@ api_keys = ['key1', 'key2', 'key3']
 documents = ['file1', 'file2', 'file3']
 
 
+class ComplUsers():
+
+    def __call__(self, prefix, **kwargs):
+        return user_accounts
+
+
 class ArgumentParser(icli.ArgumentParser):
 
     def run(self, _object, _type=None, _command=None, **kwargs):
@@ -32,6 +38,12 @@ class ArgumentParser(icli.ArgumentParser):
         elif _object == 'document':
             for i in documents:
                 print(i)
+
+    def print_global_help(self):
+        print('w - who is logged in')
+        print('top - processes')
+        print('uptime - system uptime')
+        print()
 
     def syscmd(self, cmd):
         import os
@@ -57,6 +69,13 @@ class ArgumentParser(icli.ArgumentParser):
         else:
             ps = self.ps
         return ps
+
+    def print_repeat_title(self, command, interval):
+        import datetime
+        t = datetime.datetime.now().strftime('%Y-%m-%d %T')
+        if neotermcolor:
+            command = neotermcolor.colored(command, color='yellow')
+        print('{}  {}  (interval {} sec)'.format(t, command, interval))
 
 
 ap = ArgumentParser(prog='')
@@ -84,9 +103,8 @@ sp_user_account_add.add_argument('account',
 sp_user_account_delete = sp_user_account.add_parser('del',
                                                     help='Delete user account')
 
-sp_user_account_delete.add_argument('account',
-                                    metavar='NAME',
-                                    help='Account name')
+sp_user_account_delete.add_argument(
+    'account', metavar='NAME', help='Account name').completer = ComplUsers()
 
 ap_user_apikey = sp_user_type.add_parser('apikey', help='API keys')
 sp_user_apikey = ap_user_apikey.add_subparsers(dest='_command',

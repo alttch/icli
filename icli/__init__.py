@@ -219,17 +219,20 @@ class ArgumentParser(argparse.ArgumentParser):
                                 self.current_section += jump_to
                             continue
                         if not root_cmd and self.current_section:
-                            args = []
-                            cs_added = False
-                            for p in parsed:
-                                if not p.startswith('-') and not cs_added:
-                                    cs_added = True
-                                    if not p.startswith('/'):
-                                        args += self.current_section
-                                    else:
-                                        args.append(p[1:])
-                                        continue
-                                args.append(p)
+                            if len(parsed) == 1 and parsed[0] == '-h':
+                                args = self.current_section + parsed
+                            else:
+                                args = []
+                                cs_added = False
+                                for p in parsed:
+                                    if not p.startswith('-') and not cs_added:
+                                        cs_added = True
+                                        if not p.startswith('/'):
+                                            args += self.current_section
+                                        else:
+                                            args.append(p[1:])
+                                            continue
+                                    args.append(p)
                         else:
                             args = parsed
                         try:
@@ -245,6 +248,8 @@ class ArgumentParser(argparse.ArgumentParser):
                         if do_repeat == _REPEAT_CONT_CLS:
                             self.clear_screen()
                             self.print_repeat_title(input_str, repeat_seconds)
+                        else:
+                            print()
             except KeyboardInterrupt:
                 print()
                 pass
