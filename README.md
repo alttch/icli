@@ -131,3 +131,10 @@ f.write('user account list ; user apikey list\ndocument list')
 f.seek(0)
 ap.batch(f)
 ```
+
+or just launch **batch** method with a specified stream:
+
+```python
+with open('commands.txt') as cf:
+    ap.batch(cf)
+```
