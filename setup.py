@@ -6,14 +6,14 @@ with open('README.md', 'r') as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='rapidtables',
+    name='icli',
     version=__version__,
     author='Altertech',
     author_email='div@altertech.com',
-    description='Format/create and print tables from lists of dicts',
+    description='Interactive CLI builder',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/alttch/rapidtables',
+    url='https://github.com/alttch/icli',
     packages=setuptools.find_packages(),
     license='MIT',
     install_requires=['argcomplete', 'readline'],
