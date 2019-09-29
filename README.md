@@ -68,11 +68,10 @@ Override:
 
 ## Global commands
 
-You may define global commands which work in all sections, e.g. let's make *w*
+You may define global commands, which work in all sections, e.g. let's make *w*
 system command executed when user input *w*:
 
 ```python
-
 def w(*args):
     # the method receives command name and optional command arguments in *args
     import os
