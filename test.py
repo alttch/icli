@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import icli
+import sys
 
 try:
     import neotermcolor
@@ -78,7 +79,7 @@ class ArgumentParser(icli.ArgumentParser):
         print('{}  {}  (interval {} sec)'.format(t, command, interval))
 
 
-ap = ArgumentParser(prog='')
+ap = ArgumentParser(prog='' if len(sys.argv) < 2 else None)
 
 sp = ap.add_subparsers(dest='_object', metavar='object', help='Object')
 
@@ -133,7 +134,6 @@ ap.interactive_history_file = '~/.test-icli'
 # f.write('user account list ; user apikey list\ndocument list')
 # f.seek(0)
 # ap.batch(f)
-import sys
 
 if len(sys.argv) > 1:
     ap.launch()
