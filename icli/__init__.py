@@ -161,7 +161,7 @@ class ArgumentParser(argparse.ArgumentParser):
                 while do_repeat:
                     if do_repeat == _REPEAT_ONCE:
                         do_repeat = 0
-                    for parsed in input_val:
+                    for pidx, parsed in enumerate(input_val):
                         parsed = parsed.copy()
                         if parsed[-1] == ';':
                             parsed.pop()
@@ -244,6 +244,8 @@ class ArgumentParser(argparse.ArgumentParser):
                             self.run(**a.__dict__)
                         except:
                             self.handle_interactive_exception()
+                        if pidx < len(input_val) - 1:
+                            print()
                     if do_repeat:
                         time.sleep(repeat_seconds)
                         if do_repeat == _REPEAT_CONT_CLS:
