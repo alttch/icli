@@ -162,6 +162,7 @@ class ArgumentParser(argparse.ArgumentParser):
                     if do_repeat == _REPEAT_ONCE:
                         do_repeat = 0
                     for parsed in input_val:
+                        parsed = parsed.copy()
                         if parsed[-1] == ';':
                             parsed.pop()
                         if not parsed: continue
