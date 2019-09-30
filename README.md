@@ -132,9 +132,9 @@ f.seek(0)
 ap.batch(f)
 ```
 
-or just launch **batch** method with a specified stream:
+or just launch **batch** method with a source stream:
 
 ```python
-with open('commands.txt') as cf:
+with open('commands.list') as cf:
     ap.batch(cf)
 ```
