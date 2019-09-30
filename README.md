@@ -69,7 +69,7 @@ Override:
 ## Global commands
 
 You may define global commands, which work in all sections, e.g. let's make *w*
-system command executed when user input *w*:
+system command executed, when user type *w*:
 
 ```python
 def w(*args):
