@@ -114,12 +114,12 @@ sp_user_apikey = ap_user_apikey.add_subparsers(dest='_command',
 
 sp_user_apikey_list = sp_user_apikey.add_parser('list', help='List keys')
 
-ap_invoice = sp.add_parser('document', help='Documents')
-sp_invoice = ap_invoice.add_subparsers(dest='_command',
+ap_document = sp.add_parser('document', help='Documents')
+sp_document = ap_document.add_subparsers(dest='_command',
                                        metavar='command',
                                        help='Command')
 
-sp_invoice_list = sp_invoice.add_parser('list', help='List documents')
+sp_document_list = sp_document.add_parser('list', help='List documents')
 
 ap.sections = {'user': ['account', 'apikey'], 'document': []}
 
