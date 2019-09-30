@@ -19,8 +19,8 @@ auto-complete.
 * Send multiple commands, separated with *;*
 
 * Repeat command execution, by adding *|X* to the end of input (X - delay in
-  seconds between commands, use *|cX* to clear screen before next command is
-  executed)
+  seconds between commands, use *|cX* to clear screen before next command
+  execution)
 
 * Auto-completion (via **argcomplete**)
 
