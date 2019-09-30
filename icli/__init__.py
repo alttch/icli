@@ -21,6 +21,7 @@ class ArgumentParser(argparse.ArgumentParser):
         self.interactive_global_commands = {}
         self.interactive_history_file = ''
         self.interactive_history_length = 100
+        self.send_args_as_dict = True
 
     def run(self, **kwargs):
         '''
@@ -115,7 +116,11 @@ class ArgumentParser(argparse.ArgumentParser):
                 sect_help = False
                 break
         if sect_help: args.append('-h')
-        self.run(**self.parse_args(args).__dict__)
+        a = self.parse_args(args)
+        if self.send_args_as_dict:
+            self.run(**a.__dict__)
+        else:
+            self.run(a)
 
     def batch(self, stream):
         return self.interactive(stream=stream)
@@ -284,7 +289,10 @@ class ArgumentParser(argparse.ArgumentParser):
                             self.handle_interactive_parser_exception()
                             continue
                         try:
-                            self.run(**a.__dict__)
+                            if self.send_args_as_dict:
+                                self.run(**a.__dict__)
+                            else:
+                                self.run(a)
                         except:
                             self.handle_interactive_exception()
                         if pidx < len(input_val) - 1:
