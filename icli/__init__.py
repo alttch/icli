@@ -1,6 +1,6 @@
 __author__ = 'Altertech'
 __license__ = 'MIT'
-__version__ = '0.0.7'
+__version__ = '0.0.8'
 
 import argparse
 
@@ -101,6 +101,8 @@ class ArgumentParser(argparse.ArgumentParser):
         return gpfx + pfx + result
 
     def launch(self, args=None):
+        import argcomplete
+        argcomplete.autocomplete(self)
         sect = self.sections
         sect_help = True
         if not args:
