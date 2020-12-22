@@ -1,6 +1,6 @@
 __author__ = 'Altertech'
 __license__ = 'MIT'
-__version__ = '0.0.8'
+__version__ = '0.0.9'
 
 import argparse
 
@@ -134,6 +134,7 @@ class ArgumentParser(argparse.ArgumentParser):
         import shlex
         import time
         import os
+        import sys
 
         def save_history():
             if self.interactive_history_file:
@@ -173,7 +174,11 @@ class ArgumentParser(argparse.ArgumentParser):
                     sidx += 1
                 else:
                     input_str = input(self.get_interactive_prompt())
-                input_arr = shlex.split(input_str)
+                try:
+                    input_arr = shlex.split(input_str)
+                except:
+                    print('invalid input', file=sys.stderr)
+                    input_arr = None
                 if not input_arr: continue
                 if input_arr[-1].startswith('|'):
                     repeat = input_arr.pop()[1:]
