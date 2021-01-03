@@ -16,7 +16,7 @@ setuptools.setup(
     url='https://github.com/alttch/icli',
     packages=setuptools.find_packages(),
     license='MIT',
-    install_requires=['argcomplete', 'readline'],
+    install_requires=['argcomplete'],
     classifiers=('Programming Language :: Python :: 3',
                  'License :: OSI Approved :: MIT License',
                  'Topic :: Software Development :: Libraries',
